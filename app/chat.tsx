@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: '#fff',
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
+    borderTopColor: '#808080',
     alignItems: 'center',
   },
   input: {
