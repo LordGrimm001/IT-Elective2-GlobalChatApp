@@ -73,7 +73,7 @@ export default function Login() {
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.container}>
             <Text style={styles.title}>Welcome Back</Text>
-            <Text style={styles.subtitle}>Sign in to continue</Text>
+            <Text style={styles.subtitle}>Log in to continue</Text>
             
             <View style={styles.formContainer}>
               <TextInput
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 8,
-    backgroundColor: '#000000',
+    backgroundColor: '#808080',
   },
   button: {
     marginTop: 16,
