@@ -1,39 +1,106 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
+// app/_layout.tsx
+import React, { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, enableIndexedDbPersistence } from 'firebase/firestore';
+import { AuthProvider } from '../context/AuthContext';
+import { PaperProvider } from 'react-native-paper';
+import { View, Text, ActivityIndicator } from 'react-native';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyC7WByt81HDh2zBONfySQtyihhDbE3dvqA",
+  authDomain: "adv102final-f2c81.firebaseapp.com",
+  projectId: "adv102final-f2c81",
+  storageBucket: "adv102final-f2c81.appspot.com",
+  messagingSenderId: "474540987719",
+  appId: "1:474540987719:web:f3cbb3c06957efcaa72862",
+  measurementId: "G-HLEVZXKPLB"
+};
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase services
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Enable offline persistence
+enableIndexedDbPersistence(db).catch((err) => {
+  if (err.code == 'failed-precondition') {
+    console.log('Offline persistence can only be enabled in one tab at a time');
+  } else if (err.code == 'unimplemented') {
+    console.log('The current browser does not support offline persistence');
+  }
+});
+
+// Export services for use in other files
+export { auth, db };
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const [isAuthReady, setIsAuthReady] = useState(false);
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    const unsubscribe = onAuthStateChanged(auth, () => {
+      setIsAuthReady(true);
+    });
 
-  if (!loaded) {
-    return null;
+    return () => unsubscribe();
+  }, []);
+
+  if (!isAuthReady) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#6200ee" />
+        <Text style={{ marginTop: 16 }}>Loading app...</Text>
+      </View>
+    );
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <AuthProvider>
+      <PaperProvider>
+        <Stack>
+          <Stack.Screen 
+            name="index" 
+            options={{ 
+              headerShown: false,
+              title: 'Welcome'
+            }} 
+          />
+          <Stack.Screen 
+            name="login" 
+            options={{ 
+              headerShown: false,
+              title: 'Login',
+              presentation: 'modal' 
+            }} 
+          />
+          <Stack.Screen 
+            name="signup" 
+            options={{ 
+              headerShown: false,
+              title: 'Sign Up',
+              presentation: 'modal'
+            }} 
+          />
+          <Stack.Screen 
+            name="chat" 
+            options={{ 
+              headerTitle: 'Global Chat',
+              headerBackVisible: false
+            }} 
+          />
+          <Stack.Screen 
+            name="profile" 
+            options={{ 
+              headerTitle: 'Edit Profile',
+              presentation: 'modal'
+            }} 
+          />
+        </Stack>
+      </PaperProvider>
+    </AuthProvider>
   );
 }
