@@ -91,7 +91,7 @@ export default function RootLayout() {
               headerTitle: 'Global Chat',
               headerBackVisible: false
             }} 
-          />
+          />  
           <Stack.Screen 
             name="profile" 
             options={{ 

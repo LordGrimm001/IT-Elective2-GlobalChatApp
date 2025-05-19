@@ -409,11 +409,11 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
     borderRadius: 24,
     paddingHorizontal: 16,
     maxHeight: 100,
     fontSize: 16,
+  
   },
   sendButton: {
     marginLeft: 8,
