@@ -10,13 +10,13 @@ import { View, Text, ActivityIndicator } from 'react-native';
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC7WByt81HDh2zBONfySQtyihhDbE3dvqA",
-  authDomain: "adv102final-f2c81.firebaseapp.com",
-  projectId: "adv102final-f2c81",
-  storageBucket: "adv102final-f2c81.appspot.com",
-  messagingSenderId: "474540987719",
-  appId: "1:474540987719:web:f3cbb3c06957efcaa72862",
-  measurementId: "G-HLEVZXKPLB"
+  apiKey: "AIzaSyBEPac6Lfgor_YWm3h20TZkEZtx9zOMbek",
+  authDomain: "globalchatapp-b3b25.firebaseapp.com",
+  projectId: "globalchatapp-b3b25",
+  storageBucket: "globalchatapp-b3b25.firebasestorage.app",
+  messagingSenderId: "390062671037",
+  appId: "1:390062671037:web:5b60262ed406e8b3eb23d4",
+  measurementId: "G-VD83MLDYSX"
 };
 
 // Initialize Firebase
