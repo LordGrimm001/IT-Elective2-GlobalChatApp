@@ -8,7 +8,7 @@ import { db } from '../app/_layout';
 import { 
   collection, 
   addDoc, 
-  query, 
+  query,
   orderBy, 
   onSnapshot, 
   serverTimestamp, 
@@ -35,14 +35,12 @@ export default function ChatScreen() {
   const { user, logout } = useAuth();
   const flatListRef = useRef<FlatList>(null);
 
-  // Effect to redirect if not logged in
   useEffect(() => {
     if (!user) {
       router.replace('/login');
     }
   }, [user, router]);
 
-  // Effect for message loading
   useEffect(() => {
     if (!user) return;
     
@@ -77,7 +75,6 @@ export default function ChatScreen() {
           setMessages(messageList);
           setLoading(false);
           
-          // Scroll to bottom after short delay
           setTimeout(() => {
             flatListRef.current?.scrollToEnd({ animated: true });
           }, 100);
@@ -209,6 +206,11 @@ export default function ChatScreen() {
       <View style={styles.header}>
         <Text style={styles.title}>Global Chat</Text>
         <View style={styles.headerRight}>
+          <IconButton 
+            icon="post" 
+            size={24} 
+            onPress={() => router.push('/post')} 
+          />
           <IconButton 
             icon="account-edit" 
             size={24} 
@@ -413,7 +415,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     maxHeight: 100,
     fontSize: 16,
-  
   },
   sendButton: {
     marginLeft: 8,
